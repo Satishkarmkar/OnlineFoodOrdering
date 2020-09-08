@@ -1,0 +1,68 @@
+{% extends 'pwn/welcome.html' %}
+{% block admin_welcome %}
+{% load static %}
+
+        <div class="col-sm-12">
+            <h1>State Page</h1>
+        </div>
+<div class="col-sm-12">
+    {% if udata %}
+        <form action="{% url 'updatestateid' %}?sid={{ udata.id }}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            <tr><th>State Update</th></tr>
+            <tr>
+                <th>
+                    <input type="text" value="{{ udata.name }}" name="statename" required>
+                </th>
+                <th>
+                    <input type="file" value="{{ udata.photo }}" name="stateimage" required>
+                </th>
+                <th>
+                    <button type="submit">Update</button>
+                </th>
+                <th>
+                    <a href="{% url 'state' %}"><input type="button" value="Cancel"></a>
+                </th>
+        </table>
+        </form>
+    {% endif %}
+</div>
+
+    <form action="{% url 'savestate' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+        <div class="col-sm-4">
+        <label>Add State:</label>
+            <input type="text" placeholder="Enter State Name" name="statename" required>
+        </div>
+        <div class="col-sm-4">
+            <label>Photo:</label>
+            <input type="file" name="stateimage" required>
+        </div>
+        <div class="col-sm-4">
+            <button type="submit">Save</button>
+        </div>
+    </form>
+{% if sd %}
+        <div class="col-sm-12">
+            <table align="center" border="2" style="text-align: center">
+                <tr>
+                    <th>State ID</th>
+                    <th>State Name</th>
+                    <th>State Photo</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+                {% for x in sd %}
+                    <tr>
+                        <td>{{ x.id }}</td>
+                        <td>{{ x.name }}</td>
+                        <td><img src="{{ x.photo.url }}" width="50" height="50"></td>
+                        <td><a href="{% url 'updatestate' %}?id={{ x.id }}" >Update</a></td>
+                        <td><a href="{% url 'deletestate' %}?sid={{ x.id }}" >Delete</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+{% endif %}
+{% endblock %}

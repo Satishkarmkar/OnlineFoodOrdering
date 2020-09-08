@@ -1,0 +1,12 @@
+{#{% load static %}#}
+{#{% if request.session.admin_status %}#}
+
+{% extends 'pwn/welcome.html' %}
+{% block admin_welcome %}
+    <div class="col-sm-6">
+            <h1>Home Page</h1>
+          </div>
+{% endblock %}
+{#{% else %}#}
+{#    <h1>Please login</h1>#}
+{#{% endif %}#}
