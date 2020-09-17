@@ -11,7 +11,7 @@ class CityModel(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100,unique=True)
     photo = models.ImageField(upload_to='city_images/')
-    city_state = models.ForeignKey(StateModel,unique=True,on_delete=models.CASCADE)
+    city_state = models.ForeignKey(StateModel,on_delete=models.CASCADE)
 
 class CuisineModel(models.Model):
     id = models.AutoField(primary_key=True)

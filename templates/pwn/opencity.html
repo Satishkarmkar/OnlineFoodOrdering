@@ -1,6 +1,281 @@
 {% extends 'pwn/welcome.html' %}
 {% block admin_welcome %}
-    <div class="col-sm-6">
-        <h1>City Page</h1>
+
+{#    <form action="{% url 'savecity' %}" method="post" enctype="multipart/form-data">#}
+{#    {% csrf_token %}#}
+{#    #}
+{#    <table align="center" border="2">#}
+{#        <tr><th colspan="4">All Cities Infirmation</th></tr>#}
+{#        <tr>#}
+{#            <th>City ID</th>#}
+{#            <th>City Name</th>#}
+{#            <th>City Photo</th>#}
+{#            <th>State Name</th>#}
+{#        </tr>#}
+{#        {% for x in c_data %}#}
+{#            <td>{{ x.id }}</td>#}
+{#            <td>{{ x.name }}</td>#}
+{#            <td><img src="{{ x.photo.url}}" width="50" height="50"></td>#}
+{#            <td>{{ x.city_state.name }}</td>#}
+{#        {% endfor %}#}
+{#    </table>#}
+
+
+
+    <div class="col-sm-12">
+{#    {% if c_data %}#}
+{#        <form action="{% url '' %}?cid={{ c_data.id }}" method="post" enctype="multipart/form-data">#}
+{#        {% csrf_token %}#}
+{#        <table>#}
+{#            <tr><th>City Update</th></tr>#}
+{#            <tr>#}
+{#                <th>#}
+{#                    <input type="text" value="{{ c_data.name }}" name="statename" required>#}
+{#                </th>#}
+{#                <th>#}
+{#                    <input type="file" value="{{ c_data.photo }}" name="stateimage" required>#}
+{#                </th>#}
+{#                <th>#}
+{#                    <button type="submit">Update</button>#}
+{#                </th>#}
+{#                <th>#}
+{#                    <a href="{% url 'city' %}"><input type="button" value="Cancel"></a>#}
+{#                </th>#}
+{#        </table>#}
+{#        </form>#}
+{#    {% endif %}#}
+</div>
+
+
+{#    #}
+{#    <form action="{% url 'savecity' %}" method="post" enctype="multipart/form-data">#}
+{#    {% csrf_token %}#}
+{#        <div class="col-sm-3">#}
+{#        <label>Add City:</label>#}
+{#            <input type="text" placeholder="Enter State Name" name="city_name" required>#}
+{#        </div>#}
+{#        <div class="col-sm-3">#}
+{#            <label>Photo:</label>#}
+{#            <input type="file" name="city_image" required>#}
+{#        </div>#}
+{#        <div class="col-sm-3">#}
+{#           <select name="state_name">#}
+{#               {% for x in s_data %}#}
+{#                    <option value="{{ x.id }}">{{ x.name }}</option>#}
+{#                {% endfor %}#}
+{#            </select>#}
+{#        </div>#}
+{#        <div class="col-sm-3">#}
+{#            <button type="submit">Save</button>#}
+{#        </div>#}
+{#    </form>#}
+{#{% if c_data %}#}
+{#        <div class="col-sm-12">#}
+{#            <table align="center" border="2" style="text-align: center">#}
+{#                <tr>#}
+{#                    <th>City ID</th>#}
+{#                    <th>City Name</th>#}
+{#                    <th>City Photo</th>#}
+{#                    <th>State Name</th>#}
+{#                    <th>Update</th>#}
+{#                    <th>Delete</th>#}
+{#                </tr>#}
+{#                {% for x in c_data %}#}
+{#                    <tr>#}
+{#                        <td>{{ x.id }}</td>#}
+{#                        <td>{{ x.name }}</td>#}
+{#                        <td><img src="{{ x.photo.url }}" width="50" height="50"></td>#}
+{#                        <td>{{ x.city_state.name }}</td>#}
+{#                        <td><a href="#" >Update</a></td>#}
+{#                        <td><a href="#" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a></td>#}
+{#                    </tr>#}
+{#                {% endfor %}#}
+{#            </table>#}
+{#        </div>#}
+{#{% endif %}#}
+
+
+    <!-- STATE UPDATE content -->
+    {% if cudata %}
+     <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">UPDATE YOUR CITY</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form" action="{% url 'saveupdatecity' %}?cid={{ cudata.id }}" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">City Name</label>
+                    <input type="text" class="form-control"  placeholder="Enter Your State Name..." name="cityname" value="{{ cudata.name }}" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputFile">Photo</label>
+                    <div class="input-group">
+                      <div class="custom-file ">
+                        <label for="exampleFormControlFile1"></label>
+                        <input type="file" class="form-control-file" id="exampleFormControlFile1" name="city_image" value="{{ cudata.photo }}">
+                      </div>
+                    </div>
+                  </div>
+                    <div class="row">
+                    <div class="col-sm-6">
+                      <!-- select -->
+                      <div class="form-group">
+                        <label>Select Your State</label>
+
+                        <select class="custom-select" name="statename">
+                            <option>Select State</option>
+                            {% for x in s_data %}
+                            <option value="{{ x.id }}">{{ x.name }}</option>
+                            {% endfor %}
+                        </select>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Update</button>
+                    <a href="{% url 'city' %}"><button type="button" class="btn btn-danger">Cancel</button></a>
+                </div>
+              </form>
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+      </div>
+     </section>
+     <!--END STATE UPDATE content -->
+
+
+    {% else %}
+<!-- ADD City content -->
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">ADD YOUR CITY</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form" action="{% url 'savecity' %}" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">City</label>
+                    <input type="text" class="form-control"  placeholder="Enter Your City Name..." name="cityname" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputFile">Photo</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <label for="exampleFormControlFile1"></label>
+                        <input type="file" class="form-control-file" id="exampleFormControlFile1" name="city_image">
+                      </div>
+                    </div>
+                  </div>
+                    <div class="row">
+                    <div class="col-sm-6">
+                      <!-- select -->
+                      <div class="form-group">
+                        <label>Select Your State</label>
+
+                        <select class="custom-select" name="statename">
+                            <option>Select State</option>
+                            {% for x in s_data %}
+                            <option value="{{ x.id }}">{{ x.name }}</option>
+                            {% endfor %}
+                        </select>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+              </form>
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+      </div>
+    </section>
+<!-- END STATE content-->
+
+ <!-- STATE INFORMATION content -->
+    <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-12">
+            <!-- /.card -->
+
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">CITY INFORMATION</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>City ID</th>
+                    <th>City Name</th>
+                    <th>City Photo</th>
+                    <th>State Name</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    {% for x in c_data %}
+                    <tr>
+                        <td>{{ x.id }}</td>
+                        <td>{{ x.name }}</td>
+                        <td><img src="{{ x.photo.url }}" width="50" height="50"></td>
+                        <td>{{ x.city_state.name }}</td>
+                        <td style="text-align: center"><a href="{% url 'updatecity' %}?id={{ x.id }}" ><i class="fas fa-edit"></i></a></td>
+                        <td style="text-align: center"><a href="{% url 'deletecity' %}?cid={{ x.id }}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fas fa-trash-alt"></i></a></td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- END STATE content -->
     </div>
+{% endif %}
+
+
 {% endblock %}
+

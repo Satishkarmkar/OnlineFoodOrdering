@@ -2,67 +2,154 @@
 {% block admin_welcome %}
 {% load static %}
 
-        <div class="col-sm-12">
-            <h1>State Page</h1>
-        </div>
-<div class="col-sm-12">
+      <!-- STATE UPDATE content -->
     {% if udata %}
-        <form action="{% url 'updatestateid' %}?sid={{ udata.id }}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <table>
-            <tr><th>State Update</th></tr>
-            <tr>
-                <th>
-                    <input type="text" value="{{ udata.name }}" name="statename" required>
-                </th>
-                <th>
-                    <input type="file" value="{{ udata.photo }}" name="stateimage" required>
-                </th>
-                <th>
-                    <button type="submit">Update</button>
-                </th>
-                <th>
-                    <a href="{% url 'state' %}"><input type="button" value="Cancel"></a>
-                </th>
-        </table>
-        </form>
-    {% endif %}
-</div>
+     <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">UPDATE YOUR STATE</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form" action="{% url 'updatestateid' %}?sid={{ udata.id }}" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">State</label>
+                    <input type="text" class="form-control"  placeholder="Enter Your State Name..." name="statename" value="{{ udata.name }}" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputFile">Photo</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <label for="exampleFormControlFile1"></label>
+                        <input type="file" class="form-control-file" id="exampleFormControlFile1" name="stateimage" value="{{ udata.photo }}">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-body -->
 
-    <form action="{% url 'savestate' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-        <div class="col-sm-4">
-        <label>Add State:</label>
-            <input type="text" placeholder="Enter State Name" name="statename" required>
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Update</button>
+                    <a href="{% url 'state' %}"><button type="button" class="btn btn-danger">Cancel</button></a>
+                </div>
+              </form>
+            </div>
+            <!-- /.card -->
+          </div>
         </div>
-        <div class="col-sm-4">
-            <label>Photo:</label>
-            <input type="file" name="stateimage" required>
+      </div>
+     </section>
+     <!--END STATE UPDATE content -->
+
+
+ <!-- ADD STATE content -->
+    {% else %}
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">ADD YOUR STATE</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form" action="{% url 'savestate' %}" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">State</label>
+                    <input type="text" class="form-control"  placeholder="Enter Your State Name..." name="statename" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputFile">Photo</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <label for="exampleFormControlFile1"></label>
+                        <input type="file" class="form-control-file" id="exampleFormControlFile1" name="stateimage" required>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+              </form>
+            </div>
+            <!-- /.card -->
+          </div>
         </div>
-        <div class="col-sm-4">
-            <button type="submit">Save</button>
-        </div>
-    </form>
-{% if sd %}
-        <div class="col-sm-12">
-            <table align="center" border="2" style="text-align: center">
-                <tr>
+      </div>
+    </section>
+
+<!-- END STATE content-->
+
+    <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+
+    <!-- STATE INFORMATION content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-12">
+            <!-- /.card -->
+
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">STATE INFORMATION</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
                     <th>State ID</th>
                     <th>State Name</th>
                     <th>State Photo</th>
                     <th>Update</th>
                     <th>Delete</th>
-                </tr>
-                {% for x in sd %}
+                  </tr>
+                  </thead>
+                  <tbody>
+                    {% for x in sd %}
                     <tr>
                         <td>{{ x.id }}</td>
                         <td>{{ x.name }}</td>
                         <td><img src="{{ x.photo.url }}" width="50" height="50"></td>
-                        <td><a href="{% url 'updatestate' %}?id={{ x.id }}" >Update</a></td>
-                        <td><a href="{% url 'deletestate' %}?sid={{ x.id }}" >Delete</a></td>
+                        <td style="text-align: center"><a href="{% url 'updatestate' %}?id={{ x.id }}" ><i class="fas fa-edit"></i></a></td>
+                        <td style="text-align: center"><a href="{% url 'deletestate' %}?sid={{ x.id }}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fas fa-trash-alt"></i></a></td>
                     </tr>
-                {% endfor %}
-            </table>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
         </div>
-{% endif %}
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    {% endif %}
+    <!-- END STATE content -->
+    </div>
+
+
+
+
+
 {% endblock %}

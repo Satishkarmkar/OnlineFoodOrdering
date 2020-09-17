@@ -18,7 +18,20 @@ urlpatterns = [
 
 
     path('city/',views.openCity,name="city"),
+    path('savecity/',views.saveCity,name="savecity"),
+    path('updatecity/',views.updateCity,name="updatecity"),
+    path('saveupdatecity/',views.saveUpdateCity,name="saveupdatecity"),
+    path('deletecity/',views.deleteCity,name="deletecity"),
+
+
+
+
     path('cuisine/',views.openCuisine,name="cuisine"),
+    path('savecuisine/',views.saveCuisine,name="savecuisine"),
+    path('updatecuisine/',views.updateCuisine,name="updatecuisine"),
+    path('saveupdatecuisine/',views.saveUpdateCuisine,name="saveupdatecuisine"),
+    path('deletecuisine/',views.deleteCuisine,name="deletecuisine"),
+
     path('vendor/',views.openVendor,name="vendor"),
     path('reports/',views.openReports,name="reports"),
     path('logout/',views.pwn_login_check,name="logout"),
