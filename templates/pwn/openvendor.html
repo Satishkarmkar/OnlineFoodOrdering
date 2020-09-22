@@ -1,6 +1,141 @@
 {% extends 'pwn/welcome.html' %}
 {% block admin_welcome %}
-    <div class="col-sm-6">
-        <h1>Vendor Page</h1>
-    </div>
+
+
+<!-- Vendor content -->
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">VENDOR INFORMATION</h3>
+              </div>
+              <!-- /.card-header -->
+                <div class="card-body">
+    <!-- Content Header (Page header) -->
+                        <table id="example1" class="table table-bordered table-striped" align="center">
+                            {% if pending %}
+                              <thead align="center">
+                              <th colspan="11" style="background-color: #e67e22">Pending Vendors</th>
+                                  <tr>
+                                    <th>Vendor ID</th>
+                                    <th>Stall Name</th>
+                                    <th>Contact No.1</th>
+                                    <th>Contact No.2</th>
+                                    <th>Cuisine</th>
+                                    <th>Photo</th>
+                                    <th>Address</th>
+                                    <th>City</th>
+                                    <th>State</th>
+                                    <th>Approve</th>
+                                    <th>Cancel</th>
+                                  </tr>
+                              </thead>
+                            {% for x in pending %}
+                              <tbody align="center">
+
+                                <th>{{ x.id }}</th>
+                                <th>{{ x.stall_name }}</th>
+                                <th>{{ x.contact1 }}</th>
+                                <th>{{ x.contact2 }}</th>
+                                <th>{{ x.cuisine_type.type }}</th>
+                                <th><img src="{{ x.photo.url }}" width="50" height="50"></th>
+                                <th>{{ x.address }}</th>
+                                <th>{{ x.vendor_city.name }}</th>
+                                <th>{{ x.vendor_city.city_state.name }}</th>
+                                <th><a href="{% url 'pwn_vendor_approve' %}?idno={{ x.id }}" ><i class="fas fa-stamp"></i></a></th>
+                                <th><a href="{% url 'pwn_vendor_cancel' %}?idno={{ x.id }}"><i class="fas fa-ban" style="color: #c82333"></i></a></th>
+                              </tbody>
+                            {% endfor %}
+                        {% endif %}
+                        {% if approved %}
+                              <thead align="center">
+                              <th colspan="11" style="background-color: #00b44e">Approved Vendors</th>
+                                  <tr>
+                                    <th>Vendor ID</th>
+                                    <th>Stall Name</th>
+                                    <th>Contact No.1</th>
+                                    <th>Contact No.2</th>
+                                    <th>Cuisine</th>
+                                    <th>Photo</th>
+                                    <th>Address</th>
+                                    <th>City</th>
+                                    <th>State</th>
+                                    <th>Status</th>
+                                    <th>Cancel</th>
+                                  </tr>
+                              </thead>
+                            {% for x in approved %}
+                              <tbody align="center">
+
+                                <th>{{ x.id }}</th>
+                                <th>{{ x.stall_name }}</th>
+                                <th>{{ x.contact1 }}</th>
+                                <th>{{ x.contact2 }}</th>
+                                <th>{{ x.cuisine_type.type }}</th>
+                                <th><img src="{{ x.photo.url }}" width="50" height="50"></th>
+                                <th>{{ x.address }}</th>
+                                <th>{{ x.vendor_city.name }}</th>
+                                <th>{{ x.vendor_city.city_state.name }}</th>
+                                <th><i class="fa fa-check" aria-hidden="true" style="color: #00ff00;"></i></th>
+                                <th><a href="{% url 'pwn_vendor_cancel' %}?idno={{ x.id }}"><i class="fas fa-ban" style="color: #c82333"></i></a></th>
+                              </tbody>
+                            {% endfor %}
+                        {% endif %}
+
+                        {% if canceled %}
+                              <thead align="center">
+                              <th colspan="11" style="background-color: #ee3148">Canceled Vendors</th>
+                                  <tr>
+                                    <th>Vendor ID</th>
+                                    <th>Stall Name</th>
+                                    <th>Contact No.1</th>
+                                    <th>Contact No.2</th>
+                                    <th>Cuisine</th>
+                                    <th>Photo</th>
+                                    <th>Address</th>
+                                    <th>City</th>
+                                    <th>State</th>
+                                    <th>Status</th>
+                                    <th>Delete</th>
+                                  </tr>
+                              </thead>
+                            {% for x in canceled %}
+                              <tbody align="center">
+
+                                <th>{{ x.id }}</th>
+                                <th>{{ x.stall_name }}</th>
+                                <th>{{ x.contact1 }}</th>
+                                <th>{{ x.contact2 }}</th>
+                                <th>{{ x.cuisine_type.type }}</th>
+                                <th><img src="{{ x.photo.url }}" width="50" height="50"></th>
+                                <th>{{ x.address }}</th>
+                                <th>{{ x.vendor_city.name }}</th>
+                                <th>{{ x.vendor_city.city_state.name }}</th>
+                                <th><i class="fa fa-times" aria-hidden="true" style="color: #a71d2a;"></i></th>
+                                <th><a href="{% url 'pwn_vendor_delete' %}?idno={{ x.id }}"><i class="fas fa-trash" style="color: #c82333"></i></a></th>
+                              </tbody>
+                            {% endfor %}
+                        {% endif %}
+
+                        </table>
+    <!-- END STATE content -->
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+      </div>
+    </section>
+<!-- END STATE content-->
+
+ <!-- Vendor INFORMATION content -->
+
+
+
 {% endblock %}

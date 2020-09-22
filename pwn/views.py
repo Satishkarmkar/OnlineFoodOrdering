@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from pwn.models import AdminLoginModel,StateModel,CityModel,CuisineModel
 from django.contrib import messages
+from vendor.models import VendorRegistrationModel
 # Create your views here.
 
 def showIndex(request):
@@ -97,8 +98,25 @@ def deleteCuisine(request):
     return redirect('cuisine')
 
 def openVendor(request):
-    return render(request,"pwn/openvendor.html")
+    return render(request,"pwn/openvendor.html",{"pending":VendorRegistrationModel.objects.filter(status="pending"),"approved":VendorRegistrationModel.objects.filter(status="approved"),"canceled":VendorRegistrationModel.objects.filter(status="canceled")})
 
+
+def pwn_vendor_approve(request):
+    res = VendorRegistrationModel.objects.get(id=request.GET.get("idno"))
+    res.status = 'approved'
+    res.save()
+    return openVendor(request)
+
+def pwn_vendor_cancel(request):
+    res = VendorRegistrationModel.objects.get(id=request.GET.get("idno"))
+    res.status = 'canceled'
+    res.save()
+    return openVendor(request)
+
+
+def pwn_vendor_delete(request):
+    res = VendorRegistrationModel.objects.get(id=request.GET.get("idno")).delete()
+    return openVendor(request)
 
 
 def openReports(request):

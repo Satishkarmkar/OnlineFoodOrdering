@@ -9,20 +9,20 @@
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
-      <p class="login-box-msg">Admin Sign in</p>
+      <p class="login-box-msg">Vendor Sign in</p>
 
-      <form action="{% url 'pwn_login_check' %}" method="post">
+      <form action="{% url 'vendor_login_check' %}" method="post">
           {% csrf_token %}
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Username" required name="pwn_username">
+          <input type="text" class="form-control" placeholder="Mobile No." required name="vendor_mob">
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-user"></span>
+              <span class="fas fa-phone"></span>
             </div>
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password" required name="pwn_password">
+          <input type="password" class="form-control" placeholder="Password" required name="vendor_password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -59,6 +59,9 @@
 
       <p class="mb-1">
         <a href="forgot-password.html">I forgot my password</a>
+      </p>
+     <p class="mb-1">
+        <a href="{% url 'vendor_register' %}">Vendor Registration</a>
       </p>
      {% if error %}
          <p class="mb-0" style="background-color: #0f401b; text-align: center;color: #3875d7">
