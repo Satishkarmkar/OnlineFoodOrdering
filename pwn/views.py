@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from pwn.models import AdminLoginModel,StateModel,CityModel,CuisineModel
 from django.contrib import messages
 from vendor.models import VendorRegistrationModel
+# from pwn.otpsending import sendASMS
 # Create your views here.
 
 def showIndex(request):
@@ -97,14 +98,20 @@ def deleteCuisine(request):
     messages.success(request, 'cuisine type deleted')
     return redirect('cuisine')
 
+
+
+
 def openVendor(request):
     return render(request,"pwn/openvendor.html",{"pending":VendorRegistrationModel.objects.filter(status="pending"),"approved":VendorRegistrationModel.objects.filter(status="approved"),"canceled":VendorRegistrationModel.objects.filter(status="canceled")})
 
 
 def pwn_vendor_approve(request):
     res = VendorRegistrationModel.objects.get(id=request.GET.get("idno"))
+    # sname = res.stall_name
+    # cno = res.contact1
     res.status = 'approved'
     res.save()
+    # sendASMS(str(cno),"Hello"+sname+"! \n We are happy to inform that your registration is approved by Admin")
     return openVendor(request)
 
 def pwn_vendor_cancel(request):

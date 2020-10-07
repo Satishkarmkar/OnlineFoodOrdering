@@ -1,0 +1,14 @@
+{% extends 'vendor/welcome.html' %}
+
+{% block vendor_welcome %}
+
+    <table align="center">
+        <tr style="background-color: #e67e22">
+            <th style="text-align: center; color: white;" >Welcome {{ vendor_details.stall_name }}</th>
+        </tr>
+        <tr>
+            <th><img width="400" height="300" src="{{ vendor_details.photo.url }}"></th>
+        </tr>
+    </table>
+
+{% endblock %}

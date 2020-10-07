@@ -1,0 +1,137 @@
+{% extends 'vendor/welcome.html' %}
+
+{% block vendor_welcome %}
+
+    {% if fooddata %}
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">UPDATE FOOD TYPE</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form" action="{% url 'vendor_save_update_foodtype' %}?fid={{ foodtype_data.id }}" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Food Type</label>
+                    <input type="text" class="form-control"  placeholder="Enter Your State Name..." name="foodtype" value="{{ foodtype_data.name }}" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Food Status</label>
+                    <input type="text" class="form-control"  placeholder="Enter Your State Name..." name="foodstatus" value="{{ foodtype_data.status }}" required>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Update</button>
+                    <a href="{% url 'vendor_foodtype' %}"><button type="button" class="btn btn-danger">Cancel</button></a>
+                </div>
+              </form>
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+      </div>
+     </section>
+    {% else %}
+<!-- START FOOD TYPE content-->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">ADD FOOD TYPE</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form" action="{% url 'vendor_save_foodtype' %}" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Food Type</label>
+                    <input type="text" class="form-control"  placeholder="Enter Food Type..." name="foodtype" required>
+                  </div>
+
+                 <div class="form-group">
+                    <label for="exampleInputEmail1">Status</label>
+                    <input type="text" class="form-control"  placeholder="Enter Status..." name="foodstatus" required>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer" style="text-align: center">
+                  <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+              </form>
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+      </div>
+    </section>
+<!-- END FOOD TYPE content-->
+
+    <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-12">
+            <!-- /.card -->
+
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">FOOD TYPE INFORMATION</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>Food Type ID</th>
+                    <th>Type of Food</th>
+                    <th>Status</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    {% for x in food_type %}
+                    <tr>
+                        <td>{{ x.id }}</td>
+                        <td>{{ x.name }}</td>
+                        <td>{{ x.status }}</td>
+                        <td style="text-align: center"><a href="{% url 'vendor_update_foodtype' %}?id={{ x.id }}" ><i class="fas fa-edit"></i></a></td>
+                        <td style="text-align: center"><a href="{% url 'vendor_delete_foodtype' %}?fid={{ x.id }}" onclick="return confirm('Are you sure!! You want to delete {{ x.name }} item?');"><i class="fas fa-trash-alt"></i></a></td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- END STATE content -->
+    </div>
+    {% endif %}
+
+
+{% endblock %}

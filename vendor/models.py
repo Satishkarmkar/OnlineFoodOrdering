@@ -13,13 +13,13 @@ class VendorRegistrationModel(models.Model):
     vendor_city = models.ForeignKey(CityModel,on_delete=models.CASCADE)
     password = models.CharField(max_length=20)
     OTP = models.IntegerField()
-    status = models.CharField(max_length=10) #suspend,activate
+    status = models.CharField(max_length=10)
 
 class FoodTypeModel(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     vendor_id = models.ForeignKey(VendorRegistrationModel,on_delete=models.CASCADE)
-
+    status = models.CharField(max_length=10,default=None) #suspend activate
 
 class FoodItemsModel(models.Model):
     id = models.AutoField(primary_key=True)

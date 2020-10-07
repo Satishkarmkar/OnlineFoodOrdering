@@ -1,0 +1,199 @@
+{% extends 'vendor/welcome.html' %}
+
+{% block vendor_welcome %}
+
+    {% if fooditems %}
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">UPDATE FOOD TYPE</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form" action="{% url 'vendor_save_update_food' %}?foodid={{ foodupdateid.id }}" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Food Name</label>
+                    <input type="text" class="form-control"  placeholder="Enter Food Name..." name="foodname" value="{{ foodupdateid.name }}" required>
+                  </div>
+
+                <div class="form-group">
+                    <label for="exampleInputNumber">Price</label>
+                    <input type="number" class="form-control"  placeholder="Enter Price..." name="foodprice" value="{{ foodupdateid.price }}" required>
+                  </div>
+
+                 <div class="row">
+                    <div class="col-sm-12">
+                      <!-- select -->
+                      <div class="form-group">
+                        <label>Food Type</label>
+
+                        <select class="custom-select" name="foodtype">
+                            <option>Select Food Type</option>
+                            {% for x in food_type %}
+                            <option value="{{ x.id }}">{{ x.name }}</option>
+                            {% endfor %}
+                        </select>
+
+                      </div>
+                    </div>
+                  </div>
+
+                    <div class="form-group">
+                    <label for="exampleInputFile">Photo</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <label for="exampleFormControlFile1"></label>
+                          <img src="{{ foodupdateid.photo.url }}" style="width: 50px; height: 50px; margin-right: 10px">
+                        <input type="file" class="form-control-file" id="exampleFormControlFile1" name="foodimage" value="{{ foodupdateid.photo.url }}">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Update</button>
+                    <a href="{% url 'vendor_food' %}"><button type="button" class="btn btn-danger">Cancel</button></a>
+                </div>
+              </form>
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+      </div>
+     </section>
+    {% else %}
+<!-- START FOOD TYPE content-->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">ADD FOOD</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form" action="{% url 'vendor_save_food' %}" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Food Name</label>
+                    <input type="text" class="form-control"  placeholder="Enter Food Name..." name="foodname" required>
+                  </div>
+
+                <div class="form-group">
+                    <label for="exampleInputNumber">Price</label>
+                    <input type="number" class="form-control"  placeholder="Enter Price..." name="foodprice" required>
+                  </div>
+
+                 <div class="row">
+                    <div class="col-sm-12">
+                      <!-- select -->
+                      <div class="form-group">
+                        <label>Food Type</label>
+
+                        <select class="custom-select" name="foodtype">
+                            <option>Select Food Type</option>
+                            {% for x in food_type %}
+                            <option value="{{ x.id }}">{{ x.name }}</option>
+                            {% endfor %}
+                        </select>
+
+                      </div>
+                    </div>
+                  </div>
+
+                    <div class="form-group">
+                    <label for="exampleInputFile">Photo</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <label for="exampleFormControlFile1"></label>
+                        <input type="file" class="form-control-file" id="exampleFormControlFile1" name="foodimage">
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- /.card-body -->
+
+                <div class="card-footer" style="text-align: center">
+                  <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+              </form>
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+      </div>
+    </section>
+<!-- END FOOD TYPE content-->
+
+    <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-12">
+            <!-- /.card -->
+
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">FOOD TYPE INFORMATION</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>Food ID</th>
+                    <th>Food Name</th>
+                    <th>Price</th>
+                    <th>Type of Food</th>
+                    <th>Photo</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    {% for x in food %}
+                    <tr>
+                        <td>{{ x.id }}</td>
+                        <td>{{ x.name }}</td>
+                        <td>{{ x.price }}</td>
+                        <td>{{ x.food_type.name }}</td>
+                        <td><img src="{{ x.photo.url }}" style="width: 50px;height: 50px"></td>
+                        <td style="text-align: center"><a href="{% url 'vendor_update_food' %}?id={{ x.id }}" ><i class="fas fa-edit"></i></a></td>
+                        <td style="text-align: center"><a href="{% url 'vendor_delete_food' %}?foodid={{ x.id }}" onclick="return confirm('Are you sure!! You want to delete {{ x.name }} item?');"><i class="fas fa-trash-alt"></i></a></td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- END STATE content -->
+    </div>
+    {% endif %}
+
+
+{% endblock %}

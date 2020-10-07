@@ -14,7 +14,7 @@
       <form action="{% url 'vendor_login_check' %}" method="post">
           {% csrf_token %}
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Mobile No." required name="vendor_mob">
+          <input type="text" class="form-control" placeholder="Mobile No." required name="contact1">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-phone"></span>
@@ -22,7 +22,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password" required name="vendor_password">
+          <input type="password" class="form-control" placeholder="Password" required name="vendor_pass">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
